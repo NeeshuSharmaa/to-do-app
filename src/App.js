@@ -1,5 +1,6 @@
 import React from "react";
 import uuid from "react-uuid";
+import InputMenu from "./components/InputMenu";
 import ItemsList from "./components/ItemsList";
 
 export default function App() {
@@ -25,7 +26,7 @@ export default function App() {
     setItemsArray(arrayAfterItemDelete);
   }
 
-  var arrayList = itemsArray.map((i) => {
+  var toDoItems = itemsArray.map((i) => {
     return (
       <ItemsList key={i.id} item={i} deleteItemHandler={deleteItemHandler} />
     );
@@ -33,16 +34,11 @@ export default function App() {
 
   return (
     <div className="App">
-      <input
-        type="text"
-        class-name="input-box"
-        placeholder="type to-do-items here"
-        onChange={inputItemHandler}
-      ></input>
-      <button className="add-item-btn" onClick={onAddingItems}>
-        Add Item
-      </button>
-      <div className="items-list">{arrayList}</div>
+      <InputMenu
+        inputItemHandler={inputItemHandler}
+        onAddingItems={onAddingItems}
+      />
+      <div className="items-list">{toDoItems}</div>
     </div>
   );
 }

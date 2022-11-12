@@ -8,6 +8,7 @@ export default function ItemsList(props) {
         <button className="edit-item-btn">Edit</button>
         <button
           className="delete-btn"
+          // Error msg: too many re-renders, exceeding react limit, so added fxn
           onClick={() => {
             props.deleteItemHandler(props.item.id);
             console.log("item Deleted");
