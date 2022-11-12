@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import uuid from "react-uuid";
+import ItemsList from "./components/ItemsList";
 
-function App() {
+export default function App() {
+  var [item, setItem] = React.useState("");
+  var [itemsArray, setItemsArray] = React.useState([]);
+
+  function inputItemHandler(e) {
+    setItem(e.target.value);
+  }
+
+  function onAddingItems() {
+    const newItem = {
+      id: uuid(),
+      itemName: item,
+    };
+    setItemsArray([...itemsArray, newItem]);
+  }
+
+  function deleteItemHandler(idToDelete) {
+    var arrayAfterItemDelete = itemsArray.filter(
+      (item) => item.id !== idToDelete
+    );
+    setItemsArray(arrayAfterItemDelete);
+  }
+
+  var arrayList = itemsArray.map((i) => {
+    return (
+      <ItemsList key={i.id} item={i} deleteItemHandler={deleteItemHandler} />
+    );
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="text"
+        class-name="input-box"
+        placeholder="type to-do-items here"
+        onChange={inputItemHandler}
+      ></input>
+      <button className="add-item-btn" onClick={onAddingItems}>
+        Add Item
+      </button>
+      <div className="items-list">{arrayList}</div>
     </div>
   );
 }
-
-export default App;
